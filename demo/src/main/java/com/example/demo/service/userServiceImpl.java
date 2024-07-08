@@ -10,7 +10,7 @@ import com.example.demo.pojo.User;
 import com.example.demo.repo.UserRepo;
 
 @Service
-public class userServiceImpl implements userService{
+public class UserServiceImpl implements UserService{
 
 	@Autowired
 	UserRepo userRepo;

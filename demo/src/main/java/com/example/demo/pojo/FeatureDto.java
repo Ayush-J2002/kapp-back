@@ -13,8 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-@Entity
-@Table
+
 public class FeatureDto {
 	private List<EpicDto> epics;
     @NotEmpty(message="The type is required")
@@ -49,6 +48,12 @@ public class FeatureDto {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public List<EpicDto> getEpics(){
+		return epics;
+	} 
+	public void setEpics(List<EpicDto> epic){
+		this.epics=epic;
 	}
 	
 	

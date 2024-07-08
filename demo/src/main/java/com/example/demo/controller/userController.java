@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.pojo.User;
-import com.example.demo.service.userService;
+import com.example.demo.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/v1/users")
 public class userController {
     @Autowired
-    private userService userService;
+    private UserService userService;
     @PostMapping("/records")
 	   public ResponseEntity<?> addData(@RequestBody User obj) {
 	       if (userService.existsByEmail(obj.getEmail())) {

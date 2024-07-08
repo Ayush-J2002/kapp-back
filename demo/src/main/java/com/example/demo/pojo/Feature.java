@@ -67,6 +67,12 @@ public class Feature {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+	public List<Epic> getEpics(){
+		return epics;
+	} 
+	public void setEpics(List<Epic> epic){
+		this.epics=epic;
+	}
 	
 	
 }

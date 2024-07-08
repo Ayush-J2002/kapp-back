@@ -6,9 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-@Entity
-@Table
-class EpicDto{
+public class EpicDto{
+	//private int id;
     @NotEmpty(message="it is mandatory to mention against whom the epic is filed")
     private String filedAgainst;
     @NotEmpty(message="it is necessary to mention the ownedby")

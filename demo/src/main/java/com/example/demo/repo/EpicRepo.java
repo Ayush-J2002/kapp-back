@@ -7,5 +7,6 @@ import com.example.demo.pojo.Epic;
 
 @Repository
 public interface EpicRepo extends JpaRepository<Epic,Integer>{
+   // Epic findById(int id);
 
 }

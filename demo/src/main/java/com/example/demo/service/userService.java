@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.example.demo.pojo.User;
 
-public interface userService {
+public interface UserService {
     User createNewRecordService(User user);
 	List<User> getAllRecordsService();
 	Optional<User> getOneRecordService(int id);
