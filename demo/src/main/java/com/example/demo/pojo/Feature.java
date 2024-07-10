@@ -3,6 +3,8 @@ package com.example.demo.pojo;
 import java.util.Date;
 import java.util.List;
 
+import com.example.demo.DTOs.FeatureDto;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -72,6 +74,15 @@ public class Feature {
 	} 
 	public void setEpics(List<Epic> epic){
 		this.epics=epic;
+	}
+	public Feature getFeature(FeatureDto featureDto){
+		Feature feature=new Feature();
+		feature.setType(featureDto.getType());
+		feature.setFiledAgainst(featureDto.getFiledAgainst());
+		feature.setCreatedBy(featureDto.getCreatedBy());
+		feature.setDescription(featureDto.getDescription());
+		feature.setCreatedDate(new Date());
+		return feature;
 	}
 	
 	

@@ -1,4 +1,4 @@
-package com.example.demo.pojo;
+package com.example.demo.DTOs;
 
 import java.util.Date;
 import java.util.List;

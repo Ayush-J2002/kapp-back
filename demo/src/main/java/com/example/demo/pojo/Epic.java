@@ -2,6 +2,8 @@ package com.example.demo.pojo;
 
 import java.util.Date;
 
+import com.example.demo.DTOs.EpicDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -72,6 +74,16 @@ public class Epic  {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public Epic getEpic(EpicDto epicDto){
+		Epic epic = new Epic();
+		epic.setFiledAgainst(epicDto.getFiledAgainst());
+		epic.setOwnedBy(epicDto.getOwnedBy());
+		epic.setDuedate(epicDto.getDuedate());
+		epic.setDescription(epicDto.getDescription());
+		epic.setCreatedAt(new Date());
+		epic.setFeature(feature);
+		return epic;
+	} 
 	
 	
 
