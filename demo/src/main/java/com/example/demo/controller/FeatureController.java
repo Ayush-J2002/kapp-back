@@ -51,15 +51,7 @@ public class FeatureController {
 	@PostMapping("/createfeature")
 	ResponseEntity<?> createFeature(@Valid @RequestBody FeatureDto featureDto,
 			BindingResult result) {
-			// 	if (result.hasErrors()) {
-			// 		var errorList = result.getAllErrors();
-			// 		var errorMap = new HashMap<String, String>();
-			// 		for (int i = 0; i < errorList.size(); i++) {
-			// 			var error = (FieldError) errorList.get(i);
-			// 			errorMap.put(error.getField(), error.getDefaultMessage());
-			// 		}
-			// return ResponseEntity.badRequest().body(errorMap);
-			// 	}
+			
 		 Feature feature=featureService.CreatingFeature(featureDto);
 		 return ResponseEntity.ok(feature);
 		
