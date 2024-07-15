@@ -3,7 +3,10 @@ package com.example.demo.pojo;
 import java.util.Date;
 import java.util.List;
 
+import com.example.demo.DTOs.EpicDto;
 import com.example.demo.DTOs.FeatureDto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,25 +22,29 @@ import jakarta.persistence.Table;
 public class Feature {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private int id;
-	@OneToMany(mappedBy="feature",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Epic> epics;
-	@Column
+	@JsonProperty("featureId")
+	private int featureId;
 	private String type;
-	@Column
 	private String filedAgainst;
-	@Column
 	private String createdBy;
-	@Column
 	private String description;
-	@Column
 	private Date createdDate;
+	private String plannedFor;
+	@OneToMany(mappedBy="feature",cascade=CascadeType.ALL,orphanRemoval=true)
+	@JsonManagedReference
+	private List<Epic> epics;
+
+	public void setPlannedFor(String plannedFor) {
+		this.plannedFor = plannedFor;
+	}
+	public String getPlannedFor() {
+		return plannedFor;
+	}
 	public int getId() {
-		return id;
+		return featureId;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.featureId = id;
 	}
 	public String getType() {
 		return type;
@@ -72,15 +79,22 @@ public class Feature {
 	public List<Epic> getEpics(){
 		return epics;
 	} 
-	public void setEpics(List<Epic> epic){
-		this.epics=epic;
+	public void setEpics(List<Epic> epics){
+		
+		this.epics=epics;
+		for(Epic epic:epics){
+			epic.setFeature(this);
+		}
+		
 	}
 	public Feature getFeature(FeatureDto featureDto){
 		Feature feature=new Feature();
+		feature.setId(100);
 		feature.setType(featureDto.getType());
 		feature.setFiledAgainst(featureDto.getFiledAgainst());
 		feature.setCreatedBy(featureDto.getCreatedBy());
 		feature.setDescription(featureDto.getDescription());
+		feature.setPlannedFor(featureDto.getPlannedFor());
 		feature.setCreatedDate(new Date());
 		return feature;
 	}

@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.DTOs.EpicDto;
 import com.example.demo.DTOs.FeatureDto;
@@ -60,19 +63,10 @@ public class FeatureServiceImpl implements FeatureService {
     }
 
     @Override
-    public Object CreatingFeature(FeatureDto featureDto, BindingResult result) {
-        if (result.hasErrors()) {
-            var errorList = result.getAllErrors();
-            var errorMap = new HashMap<String, String>();
-            for (int i = 0; i < errorList.size(); i++) {
-                var error = (FieldError) errorList.get(i);
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errorMap);
-        }
+    public Feature CreatingFeature(FeatureDto featureDto) {
         Feature feature = new Feature();
-        feature.getFeature(featureDto);
-        return featureRepository.save(feature);
+        Feature savedFeature=feature.getFeature(featureDto);
+        return featureRepository.save(savedFeature);
 
     }
 
@@ -81,18 +75,30 @@ public class FeatureServiceImpl implements FeatureService {
         return featureRepository.findAll();
     }
 
+    
+
     @Override
     public Feature createEpicFeature(List<EpicDto> epicDtos, int featureId) {
         Feature feature = featureRepository.findById(featureId)
                 .orElseThrow(() -> new RuntimeException("Feature not found"));
         List<Epic> epics = epicDtos.stream().map(epicDto -> {
             Epic epic = new Epic();
-            epic.getEpic(epicDto);
-            return epic;
+            return epic.getEpic(epicDto);
         }).collect(Collectors.toList());
         feature.getEpics().addAll(epics);
+        //feature.setEpics(epics);
         Feature epicFeature = featureRepository.save(feature);
         return epicFeature;
+    }
+
+  
+    @Transactional
+    public Feature updateFeature(int featureId, String plannedFor) {
+        Feature feature = featureRepository.findById(featureId)
+        .orElseThrow(() -> new RuntimeException("Feature not found"));
+        feature.setPlannedFor(plannedFor);
+        return feature;
+        
     }
 
 }

@@ -12,8 +12,9 @@ import com.example.demo.pojo.Feature;
 
 public interface FeatureService {
     List<Feature> findAllFeatures();
-    Object CreatingFeature(FeatureDto featureDto,BindingResult result);
+    Feature CreatingFeature(FeatureDto featureDto);
     void deleteEpic(int featureId, int epicId);
     Epic updateEpic(int featureId,int epicId,Epic epic);
     Feature createEpicFeature(List<EpicDto> epicDtos,int featureId);
+    Feature updateFeature(int featureId, String plannedFor);
 }

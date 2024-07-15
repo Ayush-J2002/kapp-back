@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +33,7 @@ import com.example.demo.service.FeatureService;
 import jakarta.validation.Valid;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/kap")
 public class FeatureController {
 	@Autowired
@@ -38,20 +43,36 @@ public class FeatureController {
 
 	@GetMapping("/getfeature")
 	public ResponseEntity<?> getAllFeatures() {
-		return (ResponseEntity<?>) featureService.findAllFeatures();
+		List<Feature> listFeature= featureService.findAllFeatures();
+		return new ResponseEntity<>(listFeature,HttpStatus.OK);
+		// return ResponseEntity.ok(listFeature);
 	}
 
 	@PostMapping("/createfeature")
 	ResponseEntity<?> createFeature(@Valid @RequestBody FeatureDto featureDto,
 			BindingResult result) {
-		return (ResponseEntity<?>) featureService.CreatingFeature(featureDto,result);
-	}
+			// 	if (result.hasErrors()) {
+			// 		var errorList = result.getAllErrors();
+			// 		var errorMap = new HashMap<String, String>();
+			// 		for (int i = 0; i < errorList.size(); i++) {
+			// 			var error = (FieldError) errorList.get(i);
+			// 			errorMap.put(error.getField(), error.getDefaultMessage());
+			// 		}
+			// return ResponseEntity.badRequest().body(errorMap);
+			// 	}
+		 Feature feature=featureService.CreatingFeature(featureDto);
+		 return ResponseEntity.ok(feature);
+		
+
+}
 
 	@PostMapping("/{featureId}")
 	public ResponseEntity<Feature> addEpicsToFeature(@PathVariable int featureId, @RequestBody List<EpicDto> epicDtos) {
 		Feature feature = featureService.createEpicFeature(epicDtos, featureId);
 		return ResponseEntity.ok(feature);
 	}
+
+	
 
 	@DeleteMapping("/{featureId}/{epicId}")
 	public void deletingEpic(@PathVariable int featureId, @PathVariable int epicId) {
@@ -63,4 +84,12 @@ public class FeatureController {
 		return featureService.updateEpic(featureId, epicId, updatedEpic);
 	}
 
+	@PutMapping("/{featureId}")
+    public Feature updateFeature(@PathVariable int featureId, @RequestBody String body) {
+        JSONObject jsonObject = new JSONObject(body);
+        String plannedFor = jsonObject.getString("plannedFor");
+        return featureService.updateFeature(featureId, plannedFor);
+    }
 }
+
+

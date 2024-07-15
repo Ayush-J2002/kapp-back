@@ -3,6 +3,8 @@ package com.example.demo.DTOs;
 import java.util.Date;
 import java.util.List;
 
+import com.example.demo.pojo.Epic;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Entity;
@@ -22,9 +24,17 @@ public class FeatureDto {
     private String filedAgainst;
 	@NotEmpty(message="The owner is required")
     private String createdBy;
-	@Size(min=10,message="The description should not be less than 10 characters")
+	@Size(min=1,message="The description should not be less than 10 characters")
     @Size(max=200,message="The description should not be more than 200 characters")
     private String description;
+	@NotEmpty(message="Planner for should be mentioned")
+	private String plannedFor;
+	public String getPlannedFor() {
+		return plannedFor;
+	}
+	public void setPlannedFor(String plannedFor) {
+		this.plannedFor = plannedFor;
+	}
 	public String getType() {
 		return type;
 	}
@@ -54,7 +64,9 @@ public class FeatureDto {
 	} 
 	public void setEpics(List<EpicDto> epic){
 		this.epics=epic;
+
 	}
+
 	
 	
 	

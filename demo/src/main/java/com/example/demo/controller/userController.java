@@ -22,19 +22,8 @@ import com.example.demo.service.UserService;
 public class userController {
     @Autowired
     private UserService userService;
-    @PostMapping("/records")
-	   public ResponseEntity<?> addData(@RequestBody User obj) {
-	       if (userService.existsByEmail(obj.getEmail())) {
-	           return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists!");
-	       }
-	       User createdUser = userService.createNewRecordService(obj);
-	       return ResponseEntity.ok(createdUser);
-	   }
-   @GetMapping("/records")
-   public List<User> getAllData() {
-       return userService.getAllRecordsService();
-   }
-
+   
+ 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User userData) {
         System.out.println(userData);

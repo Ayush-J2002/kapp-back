@@ -3,6 +3,7 @@ package com.example.demo.pojo;
 import java.util.Date;
 
 import com.example.demo.DTOs.EpicDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,10 +21,11 @@ public class Epic  {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column
-	private int id;
+	private int epicId;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="feature_id")
+	@JsonBackReference
 	private Feature feature;
 	private String filedAgainst;
 	
@@ -33,10 +35,10 @@ public class Epic  {
 	@Column
 	private String description;
 	public int getId() {
-		return id;
+		return epicId;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.epicId = id;
 	}
 	public Feature getFeature() {
 		return feature;
