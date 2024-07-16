@@ -26,12 +26,11 @@ public class Sprint {
 	@JsonProperty("SprintId")
 	private int id;
 
-@OneToMany(mappedBy="sprint",cascade=CascadeType.ALL,orphanRemoval=true)
-@JsonManagedReference
-	private List<Feature> features;
-	public List<Feature> getFeatures() {
-    return features;
-}
+// @OneToMany(mappedBy="sprint",cascade=CascadeType.ALL,orphanRemoval=true)
+// @JsonManagedReference
+// 	private List<Feature> features;
+// 	public List<Feature> getFeatures() {
+//     return features;}
 
 // public void setFeatures(List<Feature> features) {
 //     this.features = features;
