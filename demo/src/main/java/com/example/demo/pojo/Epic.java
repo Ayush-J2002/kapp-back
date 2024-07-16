@@ -83,7 +83,6 @@ public class Epic  {
 		epic.setDuedate(epicDto.getDuedate());
 		epic.setDescription(epicDto.getDescription());
 		epic.setCreatedAt(new Date());
-		epic.setFeature(feature);
 		return epic;
 	} 
 	

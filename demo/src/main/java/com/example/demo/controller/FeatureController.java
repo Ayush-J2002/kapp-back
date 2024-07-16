@@ -58,10 +58,18 @@ public class FeatureController {
 
 }
 
+	// @PostMapping("/{featureId}")
+	// public ResponseEntity<List<Epic>> addEpicsToFeature(@PathVariable int featureId, @RequestBody List<EpicDto> epicDtos) {
+	// 	List<Epic> epics = featureService.createEpicFeature(epicDtos, featureId);
+	// 	return new ResponseEntity<>(epics,HttpStatus.CREATED);
+	// }
+
+
+
 	@PostMapping("/{featureId}")
-	public ResponseEntity<Feature> addEpicsToFeature(@PathVariable int featureId, @RequestBody List<EpicDto> epicDtos) {
-		Feature feature = featureService.createEpicFeature(epicDtos, featureId);
-		return ResponseEntity.ok(feature);
+	public ResponseEntity<?> addEpicsToFeature(@PathVariable int featureId, @RequestBody EpicDto epicDto) {
+		Epic epics = featureService.createEpic(featureId,epicDto);
+		return new ResponseEntity<>(epics,HttpStatus.CREATED);
 	}
 
 	

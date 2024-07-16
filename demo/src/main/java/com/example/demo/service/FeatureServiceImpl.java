@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+
+import java.lang.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,7 @@ import com.example.demo.repo.EpicRepo;
 import com.example.demo.repo.FeatureRepo;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Null;
 
 @Service
 public class FeatureServiceImpl implements FeatureService {
@@ -78,18 +83,42 @@ public class FeatureServiceImpl implements FeatureService {
     
 
     @Override
-    public Feature createEpicFeature(List<EpicDto> epicDtos, int featureId) {
+    public List<Epic> createEpicFeature(List<EpicDto> epicDtos, int featureId) {
         Feature feature = featureRepository.findById(featureId)
                 .orElseThrow(() -> new RuntimeException("Feature not found"));
         List<Epic> epics = epicDtos.stream().map(epicDto -> {
             Epic epic = new Epic();
-            return epic.getEpic(epicDto);
+            Epic savedEpic=epic.getEpic(epicDto);
+            savedEpic.setFeature(feature);
+            return savedEpic;
         }).collect(Collectors.toList());
-        feature.getEpics().addAll(epics);
-        //feature.setEpics(epics);
-        Feature epicFeature = featureRepository.save(feature);
-        return epicFeature;
+        // feature.getEpics().addAll(epics);
+        // feature.setEpics(epics);
+        // Feature epicFeature = featureRepository.save(feature);
+        return epicRepository.saveAll(epics);
+        
     }
+    // @Override
+    // public List<Epic> createEpicFeature(List<EpicDto> epicDtos, int featureId) {
+    //     Feature feature = featureRepository.findById(featureId)
+       
+    //       .orElseThrow(() -> new RuntimeException("Feature not found"));
+    //       List<Epic> listepic =null;
+    //       for(EpicDto epics:epicDtos){
+    //         System.out.println(epics.getDescription());
+
+    //         Epic epic=new Epic();
+    //         epic.getEpic(epics);
+    //         epic.setFeature(feature);
+    //         listepic.add(epic);
+    //       }
+    //       return epicRepository.saveAll(listepic);
+    // }
+
+
+
+
+    
 
   
     @Transactional
@@ -101,4 +130,15 @@ public class FeatureServiceImpl implements FeatureService {
         
     }
 
+    @Override
+    public Epic createEpic(int featureId, EpicDto epicDto) {
+        Feature feature = featureRepository.findById(featureId)
+                .orElseThrow(() -> new RuntimeException("Feature not found"));
+                Epic epic = new Epic();
+                Epic savedEpic=epic.getEpic(epicDto);
+                savedEpic.setFeature(feature);
+                return epicRepository.save(savedEpic);
+    }
+
+  
 }

@@ -2,6 +2,8 @@ package com.example.demo.DTOs;
 
 import java.util.Date;
 
+import com.example.demo.pojo.Feature;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -17,8 +19,15 @@ public class EpicDto{
     @Size(min=10,message="The description should not be less than 10 characters")
     @Size(max=200,message="The description should not be more than 200 characters")
     private String description;
+	private Feature feature;
   
 	
+	public void setFeature(Feature feature) {
+		this.feature = feature;
+	}
+	public Feature getFeature() {
+		return feature;
+	}
 	public String getFiledAgainst() {
 		return filedAgainst;
 	}

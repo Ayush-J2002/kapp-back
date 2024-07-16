@@ -14,6 +14,7 @@ public interface FeatureService {
     Feature CreatingFeature(FeatureDto featureDto);
     void deleteEpic(int featureId, int epicId);
     Epic updateEpic(int featureId,int epicId,Epic epic);
-    Feature createEpicFeature(List<EpicDto> epicDtos,int featureId);
+    List<Epic> createEpicFeature(List<EpicDto> epicDtos,int featureId);
     Feature updateFeature(int featureId, String plannedFor);
+    Epic createEpic(int featureId,EpicDto epic);
 }
