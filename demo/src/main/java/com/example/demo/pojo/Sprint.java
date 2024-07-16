@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.demo.DTOs.SprintDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonFormat.Features;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -28,7 +29,18 @@ public class Sprint {
 @OneToMany(mappedBy="sprint",cascade=CascadeType.ALL,orphanRemoval=true)
 @JsonManagedReference
 	private List<Feature> features;
-	@Column
+	public List<Feature> getFeatures() {
+    return features;
+}
+
+// public void setFeatures(List<Feature> features) {
+//     this.features = features;
+// 		for(Feature feature:features){
+// 			feature.setSprint(this);
+// 		}
+// }
+
+    @Column
 	private Date start_date;
 
     @Column

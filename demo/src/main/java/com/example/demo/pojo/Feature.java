@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.demo.DTOs.EpicDto;
 import com.example.demo.DTOs.FeatureDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,6 +15,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -22,8 +25,15 @@ import jakarta.persistence.Table;
 public class Feature {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@JsonProperty("featureId")
+	@Column
 	private int featureId;
+	// @ManyToOne
+	// @JoinColumn(name="sprint_id")
+	// @JsonBackReference
+	// private Sprint sprint;
+
+	
+	
 	private String type;
 	private String filedAgainst;
 	private String createdBy;
@@ -33,6 +43,14 @@ public class Feature {
 	@OneToMany(mappedBy="feature",cascade=CascadeType.ALL,orphanRemoval=true)
 	@JsonManagedReference
 	private List<Epic> epics;
+
+
+	// public Sprint getSprint() {
+	// 	return sprint;
+	// }
+	// public void setSprint(Sprint sprint) {
+	// 	this.sprint = sprint;
+	//}
 
 	public void setPlannedFor(String plannedFor) {
 		this.plannedFor = plannedFor;
