@@ -23,64 +23,75 @@ public class Sprint {
     
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column
 	@JsonProperty("SprintId")
-	private int id;
+	private int sprintId;
 
-// @OneToMany(mappedBy="sprint",cascade=CascadeType.ALL,orphanRemoval=true)
-// @JsonManagedReference
-// 	private List<Feature> features;
-// 	public List<Feature> getFeatures() {
-//     return features;}
+@OneToMany(mappedBy="sprint",cascade=CascadeType.ALL,orphanRemoval=true)
+@JsonManagedReference
+	private List<Feature> features;
+	public List<Feature> getFeatures() {
+    return features;}
 
-// public void setFeatures(List<Feature> features) {
-//     this.features = features;
-// 		for(Feature feature:features){
-// 			feature.setSprint(this);
-// 		}
-// }
+public void setFeatures(List<Feature> features) {
+    this.features = features;
+		for(Feature feature:features){
+			feature.setSprint(this);
+		}
+}
+    @Column
+	private String sprint_Name;
+    
+    @Column
+	private Date start_Date;
 
     @Column
-	private Date start_date;
+	private Date end_Date;
 
-    @Column
-	private Date end_date;
-
-    public Sprint() {}
+    // public Sprint() {}
 	
-	public Sprint(int id, Date startDate,Date endDate) {
-		super();
-		this.id = id;
-		this.start_date =startDate;
-		this.end_date = endDate;
+	// public Sprint(int id,String sprintName, Date startDate,Date endDate) {
+	// 	super();
+	// 	this.id = id;
+    //     this.sprintName=sprintName;
+	// 	this.start_date =startDate;
+	// 	this.end_date = endDate;
 		
-	}
+	// }
 
     public int getId() {
-        return id;
+        return sprintId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.sprintId = id;
+    }
+    public String getSprintName() {
+        return sprint_Name;
     }
 
+    public void setSprintName(String sprintName) {
+        this.sprint_Name = sprintName;
+    }
     public Date getStart_date() {
-        return start_date;
+        return start_Date;
     }
 
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
+    public void setStart_date(Date start_Date) {
+        this.start_Date = start_Date;
     }
 
     public Date getEnd_date() {
-        return end_date;
+        return end_Date;
     }
 
     public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
+        this.end_Date = end_date;
     }
 
     public Sprint getSprint(SprintDto sprintDto){
 		Sprint sprint = new Sprint();
+        sprint.setSprintName(sprintDto.getSprint_Name());
 		sprint.setStart_date(sprintDto.getStart_Date());
 		sprint.setEnd_date(sprintDto.getEnd_Date());
 		return sprint;

@@ -26,11 +26,12 @@ public class Feature {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column
+	@JsonProperty("featureId")
 	private int featureId;
-	// @ManyToOne
-	// @JoinColumn(name="sprint_id")
-	// @JsonBackReference
-	// private Sprint sprint;
+	@ManyToOne
+	@JoinColumn(name="sprint_id")
+	@JsonBackReference
+	private Sprint sprint;
 
 	
 	
@@ -45,12 +46,12 @@ public class Feature {
 	private List<Epic> epics;
 
 
-	// public Sprint getSprint() {
-	// 	return sprint;
-	// }
-	// public void setSprint(Sprint sprint) {
-	// 	this.sprint = sprint;
-	//}
+	public Sprint getSprint() {
+		return sprint;
+	}
+	public void setSprint(Sprint sprint) {
+		this.sprint = sprint;
+	}
 
 	public void setPlannedFor(String plannedFor) {
 		this.plannedFor = plannedFor;

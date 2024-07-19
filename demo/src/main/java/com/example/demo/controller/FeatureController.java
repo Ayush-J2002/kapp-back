@@ -86,8 +86,9 @@ public class FeatureController {
 
 	@PutMapping("/{featureId}")
     public Feature updateFeature(@PathVariable int featureId, @RequestBody String body) {
-        JSONObject jsonObject = new JSONObject(body);
-        String plannedFor = jsonObject.getString("plannedFor");
+        // JSONObject jsonObject = new JSONObject(body);
+        // String plannedFor = jsonObject.getString("plannedFor");
+		String plannedFor="pending";
         return featureService.updateFeature(featureId, plannedFor);
     }
 }

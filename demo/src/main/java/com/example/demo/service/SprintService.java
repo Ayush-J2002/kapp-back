@@ -10,5 +10,6 @@ import com.example.demo.pojo.Sprint;
 public interface SprintService {
     List<Sprint> findAllSprints();
     Sprint CreatingSprint(SprintDto sprintDto);
+    
 
 }

@@ -17,13 +17,14 @@ import com.example.demo.DTOs.FeatureDto;
 import com.example.demo.DTOs.SprintDto;
 import com.example.demo.pojo.Feature;
 import com.example.demo.pojo.Sprint;
+import com.example.demo.repo.SprintRepo;
 import com.example.demo.service.SprintService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/sprint")
+@CrossOrigin(origins = "*")
+@RequestMapping("/kap")
 public class SprintController {
 
     @Autowired
@@ -36,7 +37,11 @@ public class SprintController {
 	}
 
 	@PostMapping("/createSprint")
-	ResponseEntity<?> createSprint(@Valid @RequestBody SprintDto sprintDto) {
+	ResponseEntity<?> createSprint(@Valid @RequestBody SprintDto sprintDto,BindingResult result) {
+		System.out.println(sprintDto.getEnd_Date());
+		System.out.println(sprintDto.getStart_Date());
+		System.out.println(sprintDto.getSprint_Name());
+
 				Sprint sprint=sprintService.CreatingSprint(sprintDto);
 				return ResponseEntity.ok(sprint);
 	}

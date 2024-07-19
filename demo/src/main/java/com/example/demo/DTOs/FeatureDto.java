@@ -2,8 +2,6 @@ package com.example.demo.DTOs;
 
 import java.util.List;
 
-
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -18,7 +16,7 @@ public class FeatureDto {
 	@Size(min=1,message="The description should not be less than 10 characters")
     @Size(max=200,message="The description should not be more than 200 characters")
     private String description;
-	@NotEmpty(message="Planner for should be mentioned")
+	@NotEmpty(message="Planned for should be mentioned")
 	private String plannedFor;
 	public String getPlannedFor() {
 		return plannedFor;
@@ -57,9 +55,5 @@ public class FeatureDto {
 		this.epics=epic;
 
 	}
-
-	
-	
-	
 }
 
