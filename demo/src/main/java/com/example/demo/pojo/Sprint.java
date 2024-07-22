@@ -24,7 +24,7 @@ public class Sprint {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column
-	@JsonProperty("SprintId")
+	@JsonProperty("sprintId")
 	private int sprintId;
 
 @OneToMany(mappedBy="sprint",cascade=CascadeType.ALL,orphanRemoval=true)
@@ -40,13 +40,13 @@ public void setFeatures(List<Feature> features) {
 		}
 }
     @Column
-	private String sprint_Name;
+	private String sprintName;
     
     @Column
-	private Date start_Date;
+	private Date startDate;
 
     @Column
-	private Date end_Date;
+	private Date endDate;
 
     // public Sprint() {}
 	
@@ -59,41 +59,37 @@ public void setFeatures(List<Feature> features) {
 		
 	// }
 
-    public int getId() {
-        return sprintId;
-    }
+  
 
-    public void setId(int id) {
-        this.sprintId = id;
-    }
     public String getSprintName() {
-        return sprint_Name;
+        return sprintName;
     }
 
     public void setSprintName(String sprintName) {
-        this.sprint_Name = sprintName;
-    }
-    public Date getStart_date() {
-        return start_Date;
+        this.sprintName = sprintName;
     }
 
-    public void setStart_date(Date start_Date) {
-        this.start_Date = start_Date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public Date getEnd_date() {
-        return end_Date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public void setEnd_date(Date end_date) {
-        this.end_Date = end_date;
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Sprint getSprint(SprintDto sprintDto){
 		Sprint sprint = new Sprint();
-        sprint.setSprintName(sprintDto.getSprint_Name());
-		sprint.setStart_date(sprintDto.getStart_Date());
-		sprint.setEnd_date(sprintDto.getEnd_Date());
+        sprint.setSprintName(sprintDto.getSprintName());
+		sprint.setStartDate(sprintDto.getStartDate());
+		sprint.setEndDate(sprintDto.getEndDate());
 		return sprint;
 	} 
 

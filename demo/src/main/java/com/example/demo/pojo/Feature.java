@@ -113,7 +113,7 @@ public class Feature {
 		feature.setFiledAgainst(featureDto.getFiledAgainst());
 		feature.setCreatedBy(featureDto.getCreatedBy());
 		feature.setDescription(featureDto.getDescription());
-		feature.setPlannedFor(featureDto.getPlannedFor());
+		feature.setPlannedFor("pending");
 		feature.setCreatedDate(new Date());
 		return feature;
 	}

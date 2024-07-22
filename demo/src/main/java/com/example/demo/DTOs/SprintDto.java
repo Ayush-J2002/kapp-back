@@ -11,33 +11,29 @@ public class SprintDto {
     public void setFeature(List<FeatureDto> feature) {
         this.feature = feature;
     }
-    private String sprint_Name;
+    private String sprintName;
  
-    private Date start_Date;
+    private Date startDate;
 
-	private Date end_Date;
-
-    public Date getStart_Date() {
-        return start_Date;
+	private Date endDate;
+    public String getSprintName() {
+        return sprintName;
     }
-    
-    public void setStart_Date(Date start_Date) {
-        this.start_Date = start_Date;
+    public void setSprintName(String sprintName) {
+        this.sprintName = sprintName;
     }
-
-    public Date getEnd_Date() {
-        return end_Date;
+    public Date getStartDate() {
+        return startDate;
     }
-
-    public void setEnd_Date(Date end_Date) {
-        this.end_Date = end_Date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
-   
-	public String getSprint_Name() {
-        return sprint_Name;
+    public Date getEndDate() {
+        return endDate;
+    }
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public void setSprint_Name(String sprint_Name) {
-        this.sprint_Name = sprint_Name;
-    }
+  
 }

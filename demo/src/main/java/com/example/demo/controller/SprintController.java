@@ -38,9 +38,9 @@ public class SprintController {
 
 	@PostMapping("/createSprint")
 	ResponseEntity<?> createSprint(@Valid @RequestBody SprintDto sprintDto,BindingResult result) {
-		System.out.println(sprintDto.getEnd_Date());
-		System.out.println(sprintDto.getStart_Date());
-		System.out.println(sprintDto.getSprint_Name());
+		System.out.println(sprintDto.getEndDate());
+		System.out.println(sprintDto.getStartDate());
+		System.out.println(sprintDto.getSprintName());
 
 				Sprint sprint=sprintService.CreatingSprint(sprintDto);
 				return ResponseEntity.ok(sprint);
