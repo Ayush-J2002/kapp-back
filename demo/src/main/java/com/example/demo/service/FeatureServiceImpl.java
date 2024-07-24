@@ -22,8 +22,10 @@ import com.example.demo.DTOs.EpicDto;
 import com.example.demo.DTOs.FeatureDto;
 import com.example.demo.pojo.Epic;
 import com.example.demo.pojo.Feature;
+import com.example.demo.pojo.Sprint;
 import com.example.demo.repo.EpicRepo;
 import com.example.demo.repo.FeatureRepo;
+import com.example.demo.repo.SprintRepo;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Null;
@@ -35,6 +37,8 @@ public class FeatureServiceImpl implements FeatureService {
 
     @Autowired
     private FeatureRepo featureRepository;
+    @Autowired
+    private SprintRepo sprintRepo;
 
     @Transactional
     public void deleteEpic(int featureId, int epicId) {
@@ -70,6 +74,10 @@ public class FeatureServiceImpl implements FeatureService {
     @Override
     public Feature CreatingFeature(FeatureDto featureDto) {
         Feature feature = new Feature();
+        if(featureDto.getSprintId()!=null){
+        Sprint sprint=sprintRepo.findById(Integer.parseInt(featureDto.getSprintId())).orElse(null);
+        feature.setSprint(sprint);
+    }
         Feature savedFeature=feature.getFeature(featureDto);
         return featureRepository.save(savedFeature);
 
@@ -77,6 +85,7 @@ public class FeatureServiceImpl implements FeatureService {
 
     @Override
     public List<Feature> findAllFeatures() {
+        
         return featureRepository.findAll();
     }
 

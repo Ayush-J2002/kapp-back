@@ -32,9 +32,6 @@ public class Feature {
 	@JoinColumn(name="sprint_id")
 	@JsonBackReference
 	private Sprint sprint;
-
-	
-	
 	private String type;
 	private String filedAgainst;
 	private String createdBy;
@@ -44,6 +41,12 @@ public class Feature {
 	@OneToMany(mappedBy="feature",cascade=CascadeType.ALL,orphanRemoval=true)
 	@JsonManagedReference
 	private List<Epic> epics;
+
+
+    @JsonProperty("sprintId")
+public Integer getsprintId() {
+    return sprint != null ? sprint.getSprintId() : null;
+}
 
 
 	public Sprint getSprint() {
@@ -108,15 +111,16 @@ public class Feature {
 	}
 	public Feature getFeature(FeatureDto featureDto){
 		Feature feature=new Feature();
-		feature.setId(100);
 		feature.setType(featureDto.getType());
 		feature.setFiledAgainst(featureDto.getFiledAgainst());
 		feature.setCreatedBy(featureDto.getCreatedBy());
 		feature.setDescription(featureDto.getDescription());
-		feature.setPlannedFor("pending");
+		feature.setPlannedFor(featureDto.getPlannedFor());
 		feature.setCreatedDate(new Date());
 		return feature;
 	}
+
+	
 	
 	
 }

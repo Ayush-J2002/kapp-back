@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,12 @@ public class SprintController {
 		List<Sprint> listSprint= sprintService.findAllSprints();
 		return new ResponseEntity<>(listSprint,HttpStatus.OK);
 	}
+	@GetMapping("/getbysprintid")
+	public ResponseEntity<?> getSprints(@RequestBody Date date){
+		Sprint listsprint=sprintService.findsprintsbyid();
+		return new ResponseEntity<>(listsprint,HttpStatus.OK);
 
+	}
 	@PostMapping("/createSprint")
 	ResponseEntity<?> createSprint(@Valid @RequestBody SprintDto sprintDto,BindingResult result) {
 		System.out.println(sprintDto.getEndDate());

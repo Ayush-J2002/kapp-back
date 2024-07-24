@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,6 +38,18 @@ public class SprintServiceImpl implements SprintService {
          Sprint savesp=sprint.getSprint(sprintDto);
         return sprintRepo.save(savesp);
         
+    }
+
+    @Override
+    public Sprint findsprintsbyid() {
+        Date curDate=new Date();
+        List<Sprint> list=sprintRepo.findAll();
+        for (Sprint sprint : list) {
+            if(sprint.getEndDate().after(curDate)){
+                return sprint;
+            }
+        }
+        return null;
     }
 
    

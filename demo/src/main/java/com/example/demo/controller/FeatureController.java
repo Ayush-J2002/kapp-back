@@ -51,8 +51,11 @@ public class FeatureController {
 	@PostMapping("/createfeature")
 	ResponseEntity<?> createFeature(@Valid @RequestBody FeatureDto featureDto,
 			BindingResult result) {
+				System.out.println(featureDto.toString());
+				System.out.println("Sprint ID"+featureDto.getSprintId());
 			
 		 Feature feature=featureService.CreatingFeature(featureDto);
+		 System.out.println(feature.getId());
 		 return ResponseEntity.ok(feature);
 		
 
