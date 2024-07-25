@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +34,10 @@ public class SprintServiceImpl implements SprintService {
 
     @Override
     public Sprint CreatingSprint(SprintDto sprintDto) {
-       
+       validateSpringDate(sprintDto);
         Sprint sprint = new Sprint();
+        sprint.setStartDate(sprintDto.getStartDate());
+        sprint.setEndDate(sprintDto.getEndDate());
          Sprint savesp=sprint.getSprint(sprintDto);
         return sprintRepo.save(savesp);
         
@@ -52,6 +55,28 @@ public class SprintServiceImpl implements SprintService {
         return null;
     }
 
+    @Override
+    public void validateSpringDate(SprintDto sprintDto) {
+        Date sd=sprintDto.getStartDate();
+        Date ed=sprintDto.getEndDate();
+
+        Sprint previouSprint=sprintRepo.findTopByOrderByEndDateDesc();
+       
+        Date preEDate=previouSprint!=null?previouSprint.getEndDate():null;
+        if(preEDate!=null && sd!=null&&!isvalid(preEDate,sd)){
+            throw new IllegalArgumentException("start date should be 2 days after the previous end date");
+        }
+    }
+
+    public  boolean isvalid(Date prDate,Date sDate){
+
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(prDate);
+        calendar.add(Calendar.DATE, 2);
+        Date minSDate=calendar.getTime();
+
+        return !sDate.before(minSDate);
+    }
    
     
 }
