@@ -21,7 +21,7 @@ public class FeatureDto {
     private String description;
 	@NotEmpty(message="Planned for should be mentioned")
 	private String plannedFor;
-	//@JsonProperty("sprintId")
+	@JsonProperty("sprintId")
 	private String sprintId;
 	
 	public String getSprintId() {

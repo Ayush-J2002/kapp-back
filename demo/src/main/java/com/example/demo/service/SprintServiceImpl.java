@@ -18,6 +18,8 @@ import com.example.demo.pojo.Sprint;
 import com.example.demo.repo.FeatureRepo;
 import com.example.demo.repo.SprintRepo;
 
+import jakarta.validation.Valid;
+
 
 
 @Service
@@ -77,6 +79,15 @@ public class SprintServiceImpl implements SprintService {
 
         return !sDate.before(minSDate);
     }
-   
+   @Override
+    public Sprint getSprintById(@Valid Integer id) {
+        System.out.println(id);
+        Sprint sprint = sprintRepo.findById(id).orElse(null);
+        if (id == null) {
+            return null;
+        }
+        System.out.println(sprint);
+        return sprint;
+    }
     
 }
