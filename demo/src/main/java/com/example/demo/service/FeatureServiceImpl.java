@@ -148,6 +148,10 @@ public class FeatureServiceImpl implements FeatureService {
                 savedEpic.setFeature(feature);
                 return epicRepository.save(savedEpic);
     }
-
+    public Feature updateFeatureBySprint(int featureId, Sprint sprint) {
+        Feature newfeature=featureRepository.findById(featureId).orElse(null);
+        newfeature.setSprint(sprint);
+        return featureRepository.save(newfeature);
+     }
   
 }

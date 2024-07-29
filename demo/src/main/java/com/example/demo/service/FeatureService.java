@@ -6,6 +6,7 @@ import com.example.demo.DTOs.EpicDto;
 import com.example.demo.DTOs.FeatureDto;
 import com.example.demo.pojo.Epic;
 import com.example.demo.pojo.Feature;
+import com.example.demo.pojo.Sprint;
 
 public interface FeatureService {
     List<Feature> findAllFeatures();
@@ -15,4 +16,5 @@ public interface FeatureService {
     List<Epic> createEpicFeature(List<EpicDto> epicDtos,int featureId);
     Feature updateFeature(int featureId, String plannedFor);
     Epic createEpic(int featureId,EpicDto epic);
+    Feature updateFeatureBySprint(int featureId, Sprint sprint);
 }

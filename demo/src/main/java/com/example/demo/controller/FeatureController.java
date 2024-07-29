@@ -27,6 +27,7 @@ import com.example.demo.DTOs.EpicDto;
 import com.example.demo.DTOs.FeatureDto;
 import com.example.demo.pojo.Epic;
 import com.example.demo.pojo.Feature;
+import com.example.demo.pojo.Sprint;
 import com.example.demo.repo.FeatureRepo;
 import com.example.demo.service.FeatureService;
 
@@ -93,6 +94,12 @@ public class FeatureController {
         // String plannedFor = jsonObject.getString("plannedFor");
 		String plannedFor="pending";
         return featureService.updateFeature(featureId, plannedFor);
+    }
+	@PutMapping("/updateFeature/{featureId}")
+    public ResponseEntity<?> updatingFeature(@PathVariable int featureId,@RequestBody Sprint sprint){
+    Feature newfeature=this.featureService.updateFeatureBySprint(featureId,sprint);
+       return (ResponseEntity<?>) ResponseEntity.ok(newfeature);
+     
     }
 }
 
