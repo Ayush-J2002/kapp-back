@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 
 import com.example.demo.DTOs.SprintDto;
 
@@ -14,7 +15,7 @@ public interface SprintService {
     Sprint CreatingSprint(SprintDto sprintDto);
     Sprint findsprintsbyid();
     void validateSpringDate(SprintDto sprintDto);
-public Sprint getSprintById(@Valid Integer id);
+    Sprint getSprintById(@Valid Integer id);
     
 
 }

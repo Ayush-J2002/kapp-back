@@ -49,6 +49,7 @@ public Integer getsprintId() {
 }
 
 
+
 	public Sprint getSprint() {
 		return sprint;
 	}
@@ -108,6 +109,9 @@ public Integer getsprintId() {
 			epic.setFeature(this);
 		}
 		
+	}
+	public void setSprintIdtoNull(Sprint s){
+		this.sprint=s;
 	}
 	public Feature getFeature(FeatureDto featureDto){
 		Feature feature=new Feature();

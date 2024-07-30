@@ -150,6 +150,10 @@ public class FeatureServiceImpl implements FeatureService {
     }
     public Feature updateFeatureBySprint(int featureId, Sprint sprint) {
         Feature newfeature=featureRepository.findById(featureId).orElse(null);
+        if(sprint==null){
+            newfeature.setSprintIdtoNull(sprint);
+            return featureRepository.save(newfeature);
+        }
         newfeature.setSprint(sprint);
         return featureRepository.save(newfeature);
      }

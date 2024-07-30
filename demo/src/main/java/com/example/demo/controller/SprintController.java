@@ -55,10 +55,11 @@ public class SprintController {
 	}
 
 @GetMapping("/getsprintbyId/{id}")
-    Sprint getSprintById(@Valid @PathVariable Integer id){
-        JSONObject js=new JSONObject();
-        // Integer id=js.
-        return sprintService.getSprintById(id);
+    ResponseEntity<?> getSprintById(@Valid @PathVariable Integer id){
+		System.out.println(id);
+        Sprint sprint=sprintService.getSprintById(id);
+		System.out.println(sprint.getSprintName());
+		return (ResponseEntity<?>) ResponseEntity.ok(sprint);
     }
     
 }

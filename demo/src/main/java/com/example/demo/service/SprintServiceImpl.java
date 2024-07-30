@@ -82,11 +82,10 @@ public class SprintServiceImpl implements SprintService {
    @Override
     public Sprint getSprintById(@Valid Integer id) {
         System.out.println(id);
-        Sprint sprint = sprintRepo.findById(id).orElse(null);
         if (id == null) {
             return null;
         }
-        System.out.println(sprint);
+        Sprint sprint = sprintRepo.findById(id).orElse(null);
         return sprint;
     }
     
