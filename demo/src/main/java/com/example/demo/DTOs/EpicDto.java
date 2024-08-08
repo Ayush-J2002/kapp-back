@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.example.demo.pojo.Feature;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 

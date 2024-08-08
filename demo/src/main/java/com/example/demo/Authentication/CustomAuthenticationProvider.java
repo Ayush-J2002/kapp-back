@@ -9,6 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.service.MyUserDetailsService;
+
 
 
 @Component
@@ -21,6 +23,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
+        
         UserDetails user = userDetailsService.loadUserByUsername(username);
 
         if (user != null && user.getPassword().equals(password)) {

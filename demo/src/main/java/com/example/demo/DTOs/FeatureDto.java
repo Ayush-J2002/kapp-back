@@ -2,7 +2,6 @@ package com.example.demo.DTOs;
 
 import java.util.List;
 
-import com.example.demo.pojo.Sprint;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotEmpty;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
+
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import jakarta.servlet.Filter;
+
 
 //import com.kpit.demoproj.Service.JwtTokenProvider;
 
@@ -40,8 +40,8 @@ public class SecurityConfig {
           .cors(AbstractHttpConfigurer::disable)
           .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/auth/login/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasRole("USER")
+                .requestMatchers("/supervisor/**").hasRole("SUPERVISOR")
+                .requestMatchers("/tpm/**").hasRole("TPM")
                 // .requestMatchers("/common/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
             )
