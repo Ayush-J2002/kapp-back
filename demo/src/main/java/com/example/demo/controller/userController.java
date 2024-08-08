@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.pojo.User;
+import com.example.demo.pojo.NormalUSer;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -25,9 +25,9 @@ public class userController {
    
  
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody User userData) {
+    public ResponseEntity<?> loginUser(@RequestBody NormalUSer userData) {
         System.out.println(userData);
-        User user = userService.findByEmail(userData.getEmail());
+        NormalUSer user = userService.findByEmail(userData.getEmail());
         if (user != null && user.getPassword().equals(userData.getPassword())) {
             System.out.println(user);
             return ResponseEntity.ok(user);
