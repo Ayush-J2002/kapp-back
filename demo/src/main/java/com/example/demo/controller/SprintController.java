@@ -24,8 +24,8 @@ import com.example.demo.service.SprintService;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "*")
-@RequestMapping("/kap")
+@CrossOrigin("*")
+@RequestMapping("/tpm")
 public class SprintController {
 
     @Autowired
@@ -44,9 +44,6 @@ public class SprintController {
 	}
 	@PostMapping("/createSprint")
 	ResponseEntity<?> createSprint(@Valid @RequestBody SprintDto sprintDto,BindingResult result) {
-		System.out.println(sprintDto.getEndDate());
-		System.out.println(sprintDto.getStartDate());
-		System.out.println(sprintDto.getSprintName());
 
 				Sprint sprint=sprintService.CreatingSprint(sprintDto);
 				return ResponseEntity.ok(sprint);

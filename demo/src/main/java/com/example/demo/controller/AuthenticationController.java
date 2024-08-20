@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,12 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.DTOs.AuthenticationRequest;
 import com.example.demo.DTOs.AuthenticationResponse;
-import com.example.demo.pojo.MyUserPrincipal;
-import com.example.demo.pojo.User;
-import com.example.demo.repo.UserRepo;
 import com.example.demo.service.MyUserDetailsService;
 import com.example.demo.util.JwtUtil;
-
+import com.example.demo.pojo.MyUserPrincipal;
 
 
 @RestController
@@ -28,52 +26,52 @@ import com.example.demo.util.JwtUtil;
 @CrossOrigin("*")
 public class AuthenticationController {
 
-    @Autowired
+   
     private AuthenticationManager authenticationManager;
 
-    @Autowired
+    
     private MyUserDetailsService userDetailsService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private UserRepo userRepo;
     
+    private JwtUtil jwtUtil;
+    
+    AuthenticationController(AuthenticationManager authenticationManager,MyUserDetailsService userDetailsService,JwtUtil jwtUtil){
+        this.authenticationManager=authenticationManager;
+        this.userDetailsService=userDetailsService;
+        this.jwtUtil=jwtUtil;
+    }
+
+
 
     @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public <Authentication> ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
+            throws Exception {
+        final UserDetails user = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
-       
-       String username=authenticationRequest.getUsername();
-       User user=userRepo.findByUsername(username);
-       String role=user.getRole();
-      List<GrantedAuthority> authorities = new ArrayList<>();
-      authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+        // Validate role from the request body with the role in the database
+        String requestRole = authenticationRequest.getRole();
+        System.out.println(requestRole);
+        String userRole = ((MyUserPrincipal) user).getUser().getRole();
+        System.out.println(userRole);
+        if (!userRole.equals(requestRole)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        // change the role type to grantedAuthorities
+        List<GrantedAuthority> roles=new ArrayList<>();
+        SimpleGrantedAuthority simpleGrantedAuthority=new SimpleGrantedAuthority(requestRole);
+        roles.add(simpleGrantedAuthority);
+
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword(),authorities)
-            );
+            var authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),authenticationRequest.getPassword(),roles));
+            UserDetails userDetails=(UserDetails)authentication.getPrincipal();     
+            final String jwt = jwtUtil.generateToken(userDetails);
+            return ResponseEntity.ok(new AuthenticationResponse(jwt));
+
         } catch (BadCredentialsException e) {
             throw new Exception("Incorrect username or password", e);
         }
 
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
-
-        // Validate role from the request body
-        String requestRole = authenticationRequest.getRole();
-        String userRole = ((MyUserPrincipal) userDetails).getUser().getRole();
-        System.out.println(requestRole);
-        System.out.println(userRole);
-        if (!userRole.equals(requestRole)) {
-            throw new Exception("User does not have the required role");
-        }
-
-        final String jwt = jwtUtil.generateToken(userDetails,userRole);
-
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+     
     }
-
-    
-    
 }
+

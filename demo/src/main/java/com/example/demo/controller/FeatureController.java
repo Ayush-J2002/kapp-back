@@ -31,7 +31,7 @@ import com.example.demo.service.FeatureService;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 @RequestMapping("/tpm")
 public class FeatureController {
 	@Autowired
@@ -44,7 +44,7 @@ public class FeatureController {
 	public ResponseEntity<?> getAllFeatures() {
 		List<Feature> listFeature= featureService.findAllFeatures();
 		return new ResponseEntity<>(listFeature,HttpStatus.OK);
-		// return ResponseEntity.ok(listFeature);
+		
 	}
 
 	@PostMapping("/createfeature")
@@ -54,7 +54,6 @@ public class FeatureController {
 				System.out.println("Sprint ID"+featureDto.getSprintId());
 			
 		 Feature feature=featureService.CreatingFeature(featureDto);
-		 System.out.println(feature.getId());
 		 return ResponseEntity.ok(feature);
 		
 

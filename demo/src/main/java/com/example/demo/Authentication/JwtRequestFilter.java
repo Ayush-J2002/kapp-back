@@ -42,35 +42,45 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 username = jwtUtil.extractUsername(jwt);
                 System.out.println(username);
-            } catch (ExpiredJwtException e) {
-                // Handle expired token
+            } catch (Exception e) {
+               e.printStackTrace();
             }
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             // UserDetails userDetails =(UserDetails) this.userDetailsService.loadUserByUsername(username);
-            // System.out.println(userDetails.getUsername() );
-            // System.out.println(userDetails.getPassword() );
-        
-            //System.out.println(userDetails );
-            String roles=jwtUtil.extractRoles(jwt);
-             String[] userroles=new String[1];
-             userroles[0]=roles;
-            UserDetails userDetails=User.withUsername(username).password("").authorities(userroles).build();
-            
-            if (jwtUtil.validateToken(jwt, userDetails)) {
+            List<String> roles=jwtUtil.getRolesFromToken(jwt).stream().toList();
+            String roleFromToken=roles.get(0);
+            System.out.println("roleFromToken"+roleFromToken);
+            UserDetails userDetails= User.withUsername(username).password("").authorities(roleFromToken).build();
+            Boolean validateToken=jwtUtil.validateToken(jwt, userDetails);
+            System.out.println("Ismytoken valid"+validateToken); 
+
+            if (validateToken) {
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
+                System.out.println(usernamePasswordAuthenticationToken.getAuthorities());
+            
+                    usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
+
+//         response.setHeader("Access-Control-Allow-Origin", "*"); // * = all domainName
+//         response.setHeader("Access-Control-Allow-Credentials", "true"); // allow CrossDomain to use Origin Domain
+//         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT"); 
+//         response.setHeader("Access-Control-Max-Age", "3600"); // Preflight cache duration in browser
+// //        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me"); 
+//         response.setHeader("Access-Control-Allow-Headers", "*"); // all header
+
+//         // chain.doFilter(req, res);
         chain.doFilter(request, response);
     }
 }
+
 
 
 

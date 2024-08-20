@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class MyUserPrincipal implements UserDetails {
     private User user;
 
-    public MyUserPrincipal(User user2) {
-        this.user = user2;
+    public MyUserPrincipal(User user) {
+        this.user = user;
     }
 
     public User getUser() {
@@ -54,5 +54,3 @@ public class MyUserPrincipal implements UserDetails {
         return true;
     }
 }
-
- 
